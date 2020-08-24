@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "531937394222",
+    "firebase_url": "https://pocketmech-112233.firebaseio.com",
+    "project_id": "pocketmech-112233",
+    "storage_bucket": "pocketmech-112233.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:531937394222:android:fcfe588dbdc850f858a9bf",
+        "android_client_info": {
+          "package_name": "com.mishra.pocketmech"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "531937394222-c8oi80t4bb0m2a2f1261uf2qj5irqul4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgCsXlIwLxQrFRnGf9e_XRcIPrad8wOb4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "531937394222-c8oi80t4bb0m2a2f1261uf2qj5irqul4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
