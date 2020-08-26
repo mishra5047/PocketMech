@@ -13,6 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mishra.pocketmech.Activity.OptionActivity;
+import com.mishra.pocketmech.InsuranceListing;
+import com.mishra.pocketmech.MechanicsListing;
 import com.mishra.pocketmech.R;
 
 import java.util.List;
@@ -69,14 +71,15 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
                     if (nameItem.equals("My Profile")){
 
+                    }else if(nameItem.getText().toString().equalsIgnoreCase("Insurance")){
+                        Intent intent = new Intent(v.getContext().getApplicationContext(), InsuranceListing.class);
+                        v.getContext().startActivity(intent);
                     }
-
                     else{
                         Intent intent = new Intent(v.getContext(), OptionActivity.class);
                         intent.putExtra("need", nameItem.getText().toString());
                         v.getContext().startActivity(intent);
                     }
-
                 }
             });
         }

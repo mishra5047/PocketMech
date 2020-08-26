@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.mishra.pocketmech.InsuranceListing;
+import com.mishra.pocketmech.MechanicsListing;
 import com.mishra.pocketmech.R;
 
 public class OptionActivity extends AppCompatActivity {
@@ -43,12 +45,20 @@ public class OptionActivity extends AppCompatActivity {
     }
 
     private void openActivityOnNeed(String type) {
-            if (need.equals("FAQ's")){
+            if (need.equalsIgnoreCase("FAQ's")){
                 Intent intent = new Intent(getApplicationContext(), FAQActivity.class);
                 intent.putExtra("type", type);
                 startActivity(intent);
-            }else if(need.equals("Insurance")){
-
+            }
+            else if(need.equalsIgnoreCase("Insurance")){
+                Intent intent = new Intent(getApplicationContext(), InsuranceListing.class);
+                intent.putExtra("type", type);
+                startActivity(intent);
+            }
+            else if(need.equalsIgnoreCase("Mechanics Nearby")){
+                Intent intent = new Intent(getApplicationContext(), MechanicsListing.class);
+                intent.putExtra("type", type);
+                startActivity(intent);
             }
     }
 }

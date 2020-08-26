@@ -97,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
         cat.setName("Mechanics Nearby");
         list.add(cat);
 
-
         CategoryAdapter adapter = new CategoryAdapter(list, this);
         linearLayoutManager = new GridLayoutManager(this, 2);
         recCat.setLayoutManager(linearLayoutManager);
