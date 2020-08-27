@@ -127,7 +127,7 @@ public class FAQActivity extends AppCompatActivity {
         faq.setName("Tow");
         list.add(faq);
 
-        FAQAdapter adapter = new FAQAdapter(list, this);
+        FAQAdapter adapter = new FAQAdapter(list, this, "Car");
         display.setLayoutManager(layoutManager);
         display.setAdapter(adapter);
     }
@@ -190,7 +190,7 @@ public class FAQActivity extends AppCompatActivity {
         faq.setName("Tow");
         list.add(faq);
 
-        FAQAdapter adapter = new FAQAdapter(list, this);
+        FAQAdapter adapter = new FAQAdapter(list, this, "Bike");
         display.setLayoutManager(layoutManager);
         display.setAdapter(adapter);
     }

@@ -7,8 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.mishra.pocketmech.InsuranceListing;
-import com.mishra.pocketmech.MechanicsListing;
+import com.mishra.pocketmech.Listing.InsuranceListing;
+import com.mishra.pocketmech.Listing.MechanicsListing;
 import com.mishra.pocketmech.R;
 
 public class OptionActivity extends AppCompatActivity {

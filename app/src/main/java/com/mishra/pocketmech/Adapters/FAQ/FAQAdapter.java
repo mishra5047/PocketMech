@@ -1,6 +1,7 @@
 package com.mishra.pocketmech.Adapters.FAQ;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.mishra.pocketmech.Listing.FAQListing;
 import com.mishra.pocketmech.R;
 
 import java.util.List;
@@ -21,10 +23,12 @@ public class FAQAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<ItemFAQ> list;
     Context context;
+    String type;
 
-    public FAQAdapter(List<ItemFAQ> list, Context context) {
+    public FAQAdapter(List<ItemFAQ> list, Context context, String type) {
         this.list = list;
         this.context = context;
+        this.type = type;
     }
 
     @NonNull
@@ -65,7 +69,11 @@ public class FAQAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             relativeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toasty.info(v.getContext(), nameItem.getText().toString(), Toasty.LENGTH_SHORT).show();
+                    Intent intent = new Intent(v.getContext().getApplicationContext(), FAQListing.class);
+                    intent.putExtra("type", type);
+                    intent.putExtra("item", nameItem.getText().toString());
+                    v.getContext().startActivity(intent);
+
                 }
             });
         }

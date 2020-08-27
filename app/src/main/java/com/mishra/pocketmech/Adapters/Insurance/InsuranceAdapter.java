@@ -1,7 +1,8 @@
-package com.mishra.pocketmech.Adapters.Category;
+package com.mishra.pocketmech.Adapters.Insurance;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,18 +13,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.mishra.pocketmech.Activity.OptionActivity;
-import com.mishra.pocketmech.Listing.InsuranceListing;
 import com.mishra.pocketmech.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+import es.dmoral.toasty.Toasty;
 
-    private List<ItemCategory> list;
+public class InsuranceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private List<ItemInsurance> list;
     Context context;
 
-    public CategoryAdapter(List<ItemCategory> list, Context context) {
+    public InsuranceAdapter(List<ItemInsurance> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -31,7 +33,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_cat, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_insurance, parent, false);
 
         ViewHolder viewHolder = new ViewHolder(v);
         return viewHolder;
@@ -40,10 +42,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
-        ItemCategory itemCategory = list.get(position);
-        ((ViewHolder) holder).imageItem.setImageResource(itemCategory.getImage());
+        ItemInsurance itemCategory = list.get(position);
+
+        Picasso.get().load(itemCategory.getImage()).into(((ViewHolder) holder).imageItem);
         ((ViewHolder) holder).nameItem.setText(itemCategory.getName());
-        ((ViewHolder) holder).relativeLayout.setBackgroundResource(itemCategory.getGradient());
+        ((ViewHolder) holder).urlCom.setText(itemCategory.getUrl());
     }
 
     @Override
@@ -56,6 +59,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         TextView nameItem;
         ImageView imageItem;
         RelativeLayout relativeLayout;
+        TextView urlCom;
 
         public ViewHolder(final View itemView){
             super(itemView);
@@ -63,22 +67,15 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             relativeLayout = itemView.findViewById(R.id.relLayout);
             nameItem = itemView.findViewById(R.id.textItem);
             imageItem = itemView.findViewById(R.id.image);
+            urlCom = itemView.findViewById(R.id.url);
 
             relativeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                    if (nameItem.equals("My Profile")){
-
-                    }else if(nameItem.getText().toString().equalsIgnoreCase("Insurance")){
-                        Intent intent = new Intent(v.getContext().getApplicationContext(), InsuranceListing.class);
-                        v.getContext().startActivity(intent);
-                    }
-                    else{
-                        Intent intent = new Intent(v.getContext(), OptionActivity.class);
-                        intent.putExtra("need", nameItem.getText().toString());
-                        v.getContext().startActivity(intent);
-                    }
+                    String url = urlCom.getText().toString();
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse(url));
+                    v.getContext().startActivity(i);
                 }
             });
         }
