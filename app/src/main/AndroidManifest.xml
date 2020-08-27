@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".Listing.FAQListing"></activity>
+        <activity android:name=".Activity.MechanicsListActivity"></activity>
+        <activity android:name=".Listing.FAQListing" />
         <activity android:name=".Listing.InsuranceListing" />
         <activity android:name=".Listing.MechanicsListing" />
         <activity android:name=".Activity.FAQActivity" />
