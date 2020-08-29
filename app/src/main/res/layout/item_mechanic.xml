@@ -1,54 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/relLayout"
     android:layout_height="wrap_content"
+    android:layout_marginTop="3dp"
     android:background="@drawable/rounded_rectangle_white_no_border">
 
-<ImageView
-    android:layout_margin="5dp"
-    android:layout_width="match_parent"
-    android:layout_height="100dp"
+<com.joooonho.SelectableRoundedImageView
+    android:layout_centerVertical="true"
+    app:sriv_left_top_corner_radius="15dp"
+    app:sriv_right_top_corner_radius="15dp"
+    android:layout_width="80dp"
+    android:layout_height="80dp"
     android:id="@+id/image"/>
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/image">
+
     <TextView
+        android:layout_marginLeft="4dp"
         android:layout_alignParentLeft="true"
-        android:layout_below="@id/image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:id="@+id/name"
+        android:text="Uttam Auto"
+        android:fontFamily="@font/roboto_regular"
+        android:textStyle="bold"
         android:textSize="16sp"/>
 
     <TextView
+        android:layout_marginLeft="4dp"
+        android:maxWidth="180dp"
         android:layout_alignParentLeft="true"
         android:layout_below="@id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:id="@+id/address"
-        android:textSize="12sp"/>
+        android:textSize="14sp"/>
 
     <TextView
+        android:layout_marginLeft="5dp"
         android:layout_alignParentLeft="true"
         android:layout_below="@id/address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:id="@+id/timings"
-        android:textSize="12sp"/>
+        android:text="9 a.m. - 8 p.m."
+        android:textStyle="bold"
+        android:fontFamily="@font/roboto_regular"
+        android:textSize="14sp"
+        android:layout_marginBottom="5dp"/>
 
-    <TextView
-        android:layout_alignParentLeft="true"
-        android:layout_below="@id/timings"
+
+        <TextView
+        android:layout_marginLeft="4dp"
+        android:text="All Repairs"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
+        android:textColor="@color/red_light"
+        android:textStyle="bold"
         android:id="@+id/type"
-        android:textSize="12sp"/>
+        android:textSize="14sp"/>
 
     <TextView
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:id="@+id/txtId"/>
+
+        <LinearLayout
+            android:id="@+id/detailsLay"
+            android:padding="3dp"
+            android:layout_margin="10dp"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/grey_border">
+
+            <ImageView
+                android:layout_gravity="center|center_vertical"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/ic_info"/>
+
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Details"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:layout_gravity="center_vertical"
+                />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/url"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.4dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginHorizontal="2dp"
+        android:background="@color/black_new"
+        android:layout_alignParentBottom="true"/>
+
 </RelativeLayout>

@@ -18,6 +18,8 @@ import com.mishra.pocketmech.R;
 
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
+
 public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<ItemCategory> list;
@@ -68,8 +70,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 @Override
                 public void onClick(View v) {
 
-                    if (nameItem.equals("My Profile")){
-
+                    if (nameItem.getText().equals("My Profile")){
+                        Toasty.info(v.getContext().getApplicationContext(), "Coming Soon", Toasty.LENGTH_SHORT).show();
                     }else if(nameItem.getText().toString().equalsIgnoreCase("Insurance")){
                         Intent intent = new Intent(v.getContext().getApplicationContext(), InsuranceListing.class);
                         v.getContext().startActivity(intent);

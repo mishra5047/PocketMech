@@ -9,6 +9,7 @@ public class ItemMechanic {
     public ItemMechanic() {
     }
 
+
     public ItemMechanic(String address, String contact, String name, String photo, String rating, String timings, String type, double latitude, double longitude, String id) {
         this.address = address;
         this.contact = contact;

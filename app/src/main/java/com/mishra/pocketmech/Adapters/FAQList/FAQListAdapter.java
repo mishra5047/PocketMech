@@ -56,6 +56,8 @@ public class FAQListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         TextView problem, solution;
         ImageView trans;
         LinearLayout sol, rel;
+        RelativeLayout exp;
+
         int i = 0;
 
         public ViewHolder(final View itemView){
@@ -67,12 +69,31 @@ public class FAQListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             sol = itemView.findViewById(R.id.lay_sol);
             trans.setImageResource(R.drawable.ic_down);
             rel = itemView.findViewById(R.id.relLayout);
+            exp = itemView.findViewById(R.id.layExp);
+
+            rel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (i == 0) {
+                        rel.setBackgroundColor(itemView.getResources().getColor(R.color.dark_grey));
+                        trans.setImageResource(R.drawable.ic_up);
+                        sol.setVisibility(View.VISIBLE);
+                        i = 1;
+                    }
+                    else if(i == 1){
+                        rel.setBackgroundColor(itemView.getResources().getColor(R.color.white));
+                        trans.setImageResource(R.drawable.ic_down);
+                        sol.setVisibility(View.GONE);
+                        i = 0;
+                    }
+                }
+            });
 
             trans.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                         if (i == 0) {
-                            rel.setBackgroundColor(itemView.getResources().getColor(R.color.red_light_2));
+                            rel.setBackgroundColor(itemView.getResources().getColor(R.color.dark_grey));
                             trans.setImageResource(R.drawable.ic_up);
                             sol.setVisibility(View.VISIBLE);
                             i = 1;

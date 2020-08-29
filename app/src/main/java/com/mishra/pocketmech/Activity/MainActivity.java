@@ -74,25 +74,25 @@ public class MainActivity extends AppCompatActivity {
         recCat.setLayoutManager(layoutManager);
 
         ItemCategory cat = new ItemCategory();
-        cat.setGradient(R.drawable.gradient_1);
+        cat.setGradient(R.drawable.rounded_rectangle_blue_no_border);
         cat.setImage(R.drawable.car_insurance);
         cat.setName("Insurance");
         list.add(cat);
 
         cat = new ItemCategory();
-        cat.setGradient(R.drawable.gradient_2);
+        cat.setGradient(R.drawable.rounded_rectangle_blue_no_border);
         cat.setImage(R.drawable.faq_icon);
         cat.setName("FAQ's");
         list.add(cat);
 
         cat = new ItemCategory();
-        cat.setGradient(R.drawable.gradient_2);
+        cat.setGradient(R.drawable.rounded_rectangle_blue_no_border);
         cat.setImage(R.drawable.profile);
         cat.setName("My Profile");
         list.add(cat);
 
         cat = new ItemCategory();
-        cat.setGradient(R.drawable.gradient_1);
+        cat.setGradient(R.drawable.rounded_rectangle_blue_no_border);
         cat.setImage(R.drawable.mechanic);
         cat.setName("Mechanics Nearby");
         list.add(cat);

@@ -14,6 +14,7 @@ import com.mishra.pocketmech.R;
 public class OptionActivity extends AppCompatActivity {
 
     ImageView bike, car;
+    String type;
 
     String need;
 
@@ -31,14 +32,16 @@ public class OptionActivity extends AppCompatActivity {
         car.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    openActivityOnNeed("car");
+                    openActivityOnNeed("Car");
+                    type = "car";
             }
         });
 
         bike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    openActivityOnNeed("bike");
+                    openActivityOnNeed("Bike");
+                    type = "bike";
             }
         });
 
@@ -56,7 +59,7 @@ public class OptionActivity extends AppCompatActivity {
                 startActivity(intent);
             }
             else if(need.equalsIgnoreCase("Mechanics Nearby")){
-                Intent intent = new Intent(getApplicationContext(), MechanicsListing.class);
+                Intent intent = new Intent(getApplicationContext(), MechanicsListActivity.class);
                 intent.putExtra("type", type);
                 startActivity(intent);
             }
