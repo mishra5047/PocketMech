@@ -5,12 +5,12 @@ public class ItemMechanic {
     String address, contact, name, photo, rating, timings, type;
     double latitude, longitude;
     String id;
+    String monTime, satTime;
 
     public ItemMechanic() {
     }
 
-
-    public ItemMechanic(String address, String contact, String name, String photo, String rating, String timings, String type, double latitude, double longitude, String id) {
+    public ItemMechanic(String address, String contact, String name, String photo, String rating, String timings, String type, double latitude, double longitude, String id, String monTime, String satTime) {
         this.address = address;
         this.contact = contact;
         this.name = name;
@@ -21,6 +21,24 @@ public class ItemMechanic {
         this.latitude = latitude;
         this.longitude = longitude;
         this.id = id;
+        this.monTime = monTime;
+        this.satTime = satTime;
+    }
+
+    public String getMonTime() {
+        return monTime;
+    }
+
+    public void setMonTime(String monTime) {
+        this.monTime = monTime;
+    }
+
+    public String getSatTime() {
+        return satTime;
+    }
+
+    public void setSatTime(String satTime) {
+        this.satTime = satTime;
     }
 
     public String getId() {

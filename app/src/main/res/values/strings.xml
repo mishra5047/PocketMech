@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">PocketMech</string>
     <string name="lorel_ipsum">Lorem ipsum dolor sit amet, te reque commune usu, dicam gloriatur voluptatibus ius te. Ea mel intellegat signiferumque, malorum euripidis vim ne</string>
+    <string name="text_emergency">Enter Numbers of Family or Friends below so that the application can contact them in case of emergency</string>
 </resources>

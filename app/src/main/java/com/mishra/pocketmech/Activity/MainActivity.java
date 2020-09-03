@@ -38,14 +38,11 @@ public class MainActivity extends AppCompatActivity {
 
     Double latitude, longitude;
     String address_user, city_user;
-
     TextView name;
-
     private static final int MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 1;
     private FusedLocationProviderClient fusedLocationClient;
 
     RecyclerView recCat;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -115,10 +115,10 @@ public class MechOverviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             details.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toasty.info(v.getContext().getApplicationContext(), "Coming Soon", Toasty.LENGTH_SHORT).show();
-//                    Intent intent = new Intent(context.getApplicationContext(), MechanicsDetailsActivity.class);
-//                    intent.putExtra("id", id.getText().toString());
-//                    v.getContext().startActivity(intent);
+                    Intent intent = new Intent(context.getApplicationContext(), MechanicsDetailsActivity.class);
+                    intent.putExtra("type", typeVeh);
+                    intent.putExtra("id", id.getText().toString());
+                    v.getContext().startActivity(intent);
                 }
             });
         }
