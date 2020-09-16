@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mishra.pocketmech.Activity.OptionActivity;
-import com.mishra.pocketmech.Listing.InsuranceListing;
+import com.mishra.pocketmech.Adapters.Listing.InsuranceListing;
 import com.mishra.pocketmech.R;
 
 import java.util.List;

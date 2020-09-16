@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="160dp"
+    android:layout_width="match_parent"
     android:layout_marginHorizontal="10dp"
     android:id="@+id/relLayout"
     android:layout_marginVertical="5dp"
     android:layout_height="120dp">
 
 <ImageView
-    android:layout_alignParentBottom="true"
+    android:layout_centerVertical="true"
     android:layout_marginHorizontal="5dp"
     android:layout_width="80dp"
     android:layout_height="80dp"
@@ -20,8 +20,8 @@
         android:layout_height="wrap_content"
         android:textColor="@color/white"
         android:id="@+id/textItem"
-        android:textSize="16sp"
+        android:textSize="24sp"
         android:layout_margin="10dp"
-        android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"/>
 </RelativeLayout>

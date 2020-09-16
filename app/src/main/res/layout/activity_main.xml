@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,48 +8,92 @@
     android:orientation="vertical"
     tools:context=".Activity.MainActivity">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:background="@color/colorPrimaryDark">
-
         <TextView
-            android:id="@+id/txt"
-            android:layout_centerVertical="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:text="Welcome"
-            android:fontFamily="@font/monsterrat_regular"
-            android:textSize="24sp"
-            android:textColor="@color/white"/>
-
-        <TextView
             android:id="@+id/name"
-            android:layout_below="@id/txt"
-            android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
             android:text="Welcome"
             android:fontFamily="@font/monsterrat_regular"
-            android:textSize="20sp"
-            android:textColor="@color/white"/>
+            android:textSize="18sp"
+            android:textColor="@color/colorPrimaryDark"/>
 
-    </RelativeLayout>
+
+    <ImageView
+        android:background="@drawable/logo_pocket"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/name"
+        android:id="@+id/logo"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/banner"
+        android:layout_marginVertical="10dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_below="@id/logo"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"/>
 
     <TextView
+        android:layout_below="@id/banner"
+        android:id="@+id/txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Chose Your Service"
+        android:text="Services"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:layout_marginVertical="10dp"
-        android:layout_marginHorizontal="25dp"/>
+        android:layout_marginHorizontal="20dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_below="@id/txt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/recCategory"
         android:layout_marginHorizontal="10dp"/>
-</LinearLayout>
+
+   <RelativeLayout
+       android:id="@+id/emergencyLay"
+       android:elevation="5dp"
+       android:padding="7dp"
+       android:layout_width="wrap_content"
+       android:layout_above="@id/bottomBar"
+       android:background="@drawable/rounded_rectangle_red_no_border"
+       android:layout_height="wrap_content"
+       android:layout_marginBottom="10dp"
+       android:layout_centerHorizontal="true">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_centerInParent="true">
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/ic_info" android:layout_toLeftOf="@id/emer"
+            />
+
+        <TextView
+            android:layout_marginHorizontal="5dp"
+            android:id="@+id/emer"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Emergency"
+            android:textSize="16sp"/>
+    </LinearLayout>
+   </RelativeLayout>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomBar"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimaryDark"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="bottom|end"
+        app:menu="@menu/bottom_nav_menu">
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+</RelativeLayout>

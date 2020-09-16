@@ -1,5 +1,6 @@
 package com.mishra.pocketmech.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -8,6 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,32 +21,52 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.telephony.SmsManager;
+import android.view.View;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.mishra.pocketmech.Adapters.Banner.BannerAdapter;
+import com.mishra.pocketmech.Adapters.Banner.itemBanner;
 import com.mishra.pocketmech.Adapters.Category.CategoryAdapter;
 import com.mishra.pocketmech.Adapters.Category.ItemCategory;
 import com.mishra.pocketmech.R;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
 import es.dmoral.toasty.Toasty;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     Double latitude, longitude;
     String address_user, city_user;
     TextView name;
     private static final int MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 1;
     private FusedLocationProviderClient fusedLocationClient;
-
     RecyclerView recCat;
+    RecyclerView recBanner;
+    RelativeLayout emergency;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,12 +78,85 @@ public class MainActivity extends AppCompatActivity {
         name = findViewById(R.id.name);
         SharedPreferences preferences = getSharedPreferences("UserDetails", MODE_PRIVATE);
         String n = preferences.getString("name", "");
-        name.setText(n);
+        name.setText("Welcome, " + n);
 
         recCat = findViewById(R.id.recCategory);
         setCategory();
+        recBanner = findViewById(R.id.banner);
+        setBanner();
+        emergency = findViewById(R.id.emergencyLay);
+        emergency.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                emergency_function();
+            }
+        });
+        }
 
+    private void emergency_function() {
+        SharedPreferences preferences = getSharedPreferences("UserDetails", MODE_PRIVATE);
+        final String num_1 = preferences.getString("emergency_num_1", "");
+        final String num_2 = preferences.getString("emergency_num_2", "");
 
+        String location =  "http://maps.google.com/maps?q=loc:" + latitude + "," + longitude;
+        final String message = "This message is sent by PocketMech as " + name + " Has Used the SOS Feature. " + "Location = " + location ;
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setCancelable(false)
+                .setPositiveButton("Send SOS", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        
+                        SmsManager manager = SmsManager.getDefault();
+                        manager.sendTextMessage("9599656583", null, message, null, null);
+                        manager.sendTextMessage(num_2, null, message, null, null);
+
+                        Toasty.warning(MainActivity.this, "SOS Message Sent", Toasty.LENGTH_SHORT).show();
+                    }
+                })
+
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.cancel();
+                    Toasty.error(MainActivity.this, "SOS Cancelled", Toasty.LENGTH_SHORT).show();
+                    }
+                });
+
+        AlertDialog dialog = builder.create();
+        dialog.setTitle("SOS");
+        dialog.create();
+        dialog.show();
+
+    }
+
+    private void setBanner() {
+        final ArrayList<itemBanner> list = new ArrayList();
+
+        String path = "Banner/";
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference(path);
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    itemBanner item = dataSnapshot.getValue(itemBanner.class);
+                    list.add(item);
+                }
+
+                BannerAdapter adapter = new BannerAdapter(getApplicationContext(), list);
+                recBanner.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+                recBanner.setLayoutManager(new LinearLayoutManager(getApplicationContext(), RecyclerView.HORIZONTAL, false));
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void setCategory() {
@@ -71,31 +168,31 @@ public class MainActivity extends AppCompatActivity {
         recCat.setLayoutManager(layoutManager);
 
         ItemCategory cat = new ItemCategory();
-        cat.setGradient(R.drawable.rounded_rectangle_blue_no_border);
+        cat.setGradient(R.drawable.gradient_1);
         cat.setImage(R.drawable.car_insurance);
         cat.setName("Insurance");
         list.add(cat);
 
         cat = new ItemCategory();
-        cat.setGradient(R.drawable.rounded_rectangle_blue_no_border);
+        cat.setGradient(R.drawable.gradient_1);
         cat.setImage(R.drawable.faq_icon);
         cat.setName("FAQ's");
         list.add(cat);
 
         cat = new ItemCategory();
-        cat.setGradient(R.drawable.rounded_rectangle_blue_no_border);
+        cat.setGradient(R.drawable.gradient_1);
         cat.setImage(R.drawable.profile);
         cat.setName("My Profile");
         list.add(cat);
 
         cat = new ItemCategory();
-        cat.setGradient(R.drawable.rounded_rectangle_blue_no_border);
+        cat.setGradient(R.drawable.gradient_1);
         cat.setImage(R.drawable.mechanic);
         cat.setName("Mechanics Nearby");
         list.add(cat);
 
         CategoryAdapter adapter = new CategoryAdapter(list, this);
-        linearLayoutManager = new GridLayoutManager(this, 2);
+        linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         recCat.setLayoutManager(linearLayoutManager);
         recCat.setAdapter(adapter);
     }

@@ -1,4 +1,4 @@
-package com.mishra.pocketmech.Listing;
+package com.mishra.pocketmech.Adapters.Listing;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;

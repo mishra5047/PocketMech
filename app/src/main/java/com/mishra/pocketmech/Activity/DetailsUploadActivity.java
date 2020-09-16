@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,6 +28,8 @@ public class DetailsUploadActivity extends AppCompatActivity {
     TextView submit, txtEmg;
     ImageView ques;
 
+    LinearLayout emer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,11 +45,13 @@ public class DetailsUploadActivity extends AppCompatActivity {
         name_emg_1 = findViewById(R.id.name_emergency_1);
         name_emg_2 = findViewById(R.id.name_emergency_2);
         txtEmg = findViewById(R.id.txtEmg);
+        emer = findViewById(R.id.layEmergency);
 
         ques.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                txtEmg.setVisibility(View.VISIBLE);
+
+
             }
         });
 

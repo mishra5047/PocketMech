@@ -12,12 +12,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.mishra.pocketmech.Listing.FAQListing;
+import com.mishra.pocketmech.Adapters.Listing.FAQListing;
 import com.mishra.pocketmech.R;
 
 import java.util.List;
-
-import es.dmoral.toasty.Toasty;
 
 public class FAQAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 

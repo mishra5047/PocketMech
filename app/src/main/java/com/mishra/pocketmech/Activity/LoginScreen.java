@@ -16,6 +16,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,6 +48,7 @@ import es.dmoral.toasty.Toasty;
 
 public class LoginScreen extends AppCompatActivity {
 
+    private static final int PERMISSION_REQUEST_CODE = 1;
     String number;
     EditText numb;
     TextView send;
@@ -282,4 +284,35 @@ public class LoginScreen extends AppCompatActivity {
                 });
     }
 
+    private boolean checkPermission() {
+        int result = ContextCompat.checkSelfPermission(LoginScreen.this, Manifest.permission.SEND_SMS);
+        if (result == PackageManager.PERMISSION_GRANTED) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private void requestPermission() {
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, PERMISSION_REQUEST_CODE);
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_REQUEST_CODE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    Toast.makeText(LoginScreen.this,
+                            "Permission accepted", Toast.LENGTH_LONG).show();
+
+                } else {
+                    Toast.makeText(LoginScreen.this,
+                            "Permission denied", Toast.LENGTH_LONG).show();
+
+                }
+                break;
+        }
+    }
 }
