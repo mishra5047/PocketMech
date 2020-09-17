@@ -3,6 +3,10 @@ package com.mishra.pocketmech.Adapters.Banner;
 public class itemBanner {
     String url;
 
+
+    public itemBanner() {
+    }
+
     public itemBanner(String url) {
         this.url = url;
     }

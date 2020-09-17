@@ -22,6 +22,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.telephony.SmsManager;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -36,6 +37,7 @@ import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -66,11 +68,15 @@ public class MainActivity extends Activity {
     RecyclerView recCat;
     RecyclerView recBanner;
     RelativeLayout emergency;
+    ArrayList<itemBanner> list;
+    BottomNavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        list = new ArrayList();
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         getArea();
@@ -91,7 +97,21 @@ public class MainActivity extends Activity {
                 emergency_function();
             }
         });
-        }
+
+        navigationView = findViewById(R.id.bottomBar);
+        navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = navigationView.getSelectedItemId();
+                if (id == R.id.home){
+
+                }else if(id == R.id.mech){
+                    Intent intent = new Intent(getApplicationContext(), OptionActivity.class);
+                }
+            return true;
+            }
+        });
+    }
 
     private void emergency_function() {
         SharedPreferences preferences = getSharedPreferences("UserDetails", MODE_PRIVATE);
@@ -132,24 +152,20 @@ public class MainActivity extends Activity {
     }
 
     private void setBanner() {
-        final ArrayList<itemBanner> list = new ArrayList();
 
-        String path = "Banner/";
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference(path);
-
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Banner/");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    itemBanner item = dataSnapshot.getValue(itemBanner.class);
-                    list.add(item);
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    if (dataSnapshot.exists()) {
+                        itemBanner item = dataSnapshot.getValue(itemBanner.class);
+                        list.add(item);
+                    }
+                    BannerAdapter adapter = new BannerAdapter(getApplicationContext(), list);
+                    recBanner.setAdapter(adapter);
+                    recBanner.setLayoutManager(new LinearLayoutManager(getApplicationContext(), RecyclerView.HORIZONTAL, false));
                 }
-
-                BannerAdapter adapter = new BannerAdapter(getApplicationContext(), list);
-                recBanner.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
-                recBanner.setLayoutManager(new LinearLayoutManager(getApplicationContext(), RecyclerView.HORIZONTAL, false));
-
             }
 
             @Override
@@ -168,31 +184,31 @@ public class MainActivity extends Activity {
         recCat.setLayoutManager(layoutManager);
 
         ItemCategory cat = new ItemCategory();
-        cat.setGradient(R.drawable.gradient_1);
+        cat.setGradient(R.drawable.rounded_rectangle_blue_no_border);
         cat.setImage(R.drawable.car_insurance);
         cat.setName("Insurance");
         list.add(cat);
 
         cat = new ItemCategory();
-        cat.setGradient(R.drawable.gradient_1);
+        cat.setGradient(R.drawable.rounded_rectangle_blue_no_border);
         cat.setImage(R.drawable.faq_icon);
         cat.setName("FAQ's");
         list.add(cat);
 
         cat = new ItemCategory();
-        cat.setGradient(R.drawable.gradient_1);
+        cat.setGradient(R.drawable.rounded_rectangle_blue_no_border);
         cat.setImage(R.drawable.profile);
         cat.setName("My Profile");
         list.add(cat);
 
         cat = new ItemCategory();
-        cat.setGradient(R.drawable.gradient_1);
+        cat.setGradient(R.drawable.rounded_rectangle_blue_no_border);
         cat.setImage(R.drawable.mechanic);
         cat.setName("Mechanics Nearby");
         list.add(cat);
 
         CategoryAdapter adapter = new CategoryAdapter(list, this);
-        linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        linearLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
         recCat.setLayoutManager(linearLayoutManager);
         recCat.setAdapter(adapter);
     }
