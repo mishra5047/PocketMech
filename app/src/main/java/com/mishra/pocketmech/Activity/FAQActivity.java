@@ -6,24 +6,29 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mishra.pocketmech.Adapters.FAQ.FAQAdapter;
 import com.mishra.pocketmech.Adapters.FAQ.ItemFAQ;
+import com.mishra.pocketmech.Adapters.FilterAdapter;
 import com.mishra.pocketmech.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class FAQActivity extends AppCompatActivity {
+public class FAQActivity extends AppCompatActivity implements FilterAdapter.BottomSheetListener {
 
     ImageView top;
     LinearLayout search;
     RecyclerView display;
     EditText searchIn;
+
+    FloatingActionButton filter;
 
     String type;
 
@@ -32,13 +37,29 @@ public class FAQActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fep_layout);
 
+        filter = findViewById(R.id.filterIcon);
+        filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FilterAdapter filterNav = new FilterAdapter(type);
+                filterNav.show(getSupportFragmentManager(), "example bottom tag");
+
+            }
+        });
+
+
         top = findViewById(R.id.topImage);
         search = findViewById(R.id.searchLay);
         display = findViewById(R.id.problemRec);
         searchIn = findViewById(R.id.searchIn);
 
-        type = getIntent().getStringExtra("type");
-        if(type.equalsIgnoreCase("car")){
+        type = "Bike";
+
+        if (getIntent().hasExtra("type")){
+            type = getIntent().getStringExtra("type");
+        }
+
+        if(type.equalsIgnoreCase("Car")){
             top.setImageResource(R.drawable.car);
             loadFAQCar(display);
         }else {
@@ -199,5 +220,19 @@ public class FAQActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
+    }
+
+    @Override
+    public void onItemClicked(String text, int limit) {
+    if (text.equals("Car")){
+        Intent intent = new Intent(getApplicationContext(), FAQActivity.class);
+        intent.putExtra("type", "Car");
+        startActivity(intent);
+    }
+        else if (text.equals("Bike")){
+            Intent intent = new Intent(getApplicationContext(), FAQActivity.class);
+            intent.putExtra("type", "Bike");
+            startActivity(intent);
+        }
     }
 }

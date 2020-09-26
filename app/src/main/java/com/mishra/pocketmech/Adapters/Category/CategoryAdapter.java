@@ -12,13 +12,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.mishra.pocketmech.Activity.OptionActivity;
+import com.mishra.pocketmech.Activity.FAQActivity;
+import com.mishra.pocketmech.Activity.MechanicsListActivity;
 import com.mishra.pocketmech.Adapters.Listing.InsuranceListing;
 import com.mishra.pocketmech.R;
+import com.mishra.pocketmech.Activity.UserProfile;
 
 import java.util.List;
-
-import es.dmoral.toasty.Toasty;
 
 public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -71,14 +71,19 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 public void onClick(View v) {
 
                     if (nameItem.getText().equals("My Profile")){
-                        Toasty.info(v.getContext().getApplicationContext(), "Coming Soon", Toasty.LENGTH_SHORT).show();
+                      Intent intent = new Intent(v.getContext().getApplicationContext(), UserProfile.class);
+                      v.getContext().startActivity(intent);
                     }else if(nameItem.getText().toString().equalsIgnoreCase("Insurance")){
                         Intent intent = new Intent(v.getContext().getApplicationContext(), InsuranceListing.class);
                         v.getContext().startActivity(intent);
                     }
+                    else if(nameItem.getText().toString().equals("FAQ's")){
+                        Intent intent = new Intent(v.getContext().getApplicationContext(), FAQActivity.class);
+                        v.getContext().startActivity(intent);
+
+                    }
                     else{
-                        Intent intent = new Intent(v.getContext(), OptionActivity.class);
-                        intent.putExtra("need", nameItem.getText().toString());
+                        Intent intent = new Intent(v.getContext(), MechanicsListActivity.class);
                         v.getContext().startActivity(intent);
                     }
                 }

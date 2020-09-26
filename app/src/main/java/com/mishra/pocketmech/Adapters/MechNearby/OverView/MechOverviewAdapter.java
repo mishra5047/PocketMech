@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.location.Location;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,11 +33,15 @@ public class MechOverviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private List<ItemMechanic> list;
     Context context;
     String typeVeh;
+    double latitude;
+    double longitude;
 
-    public MechOverviewAdapter(List<ItemMechanic> list, Context context, String typeVeh) {
+    public MechOverviewAdapter(List<ItemMechanic> list, Context context, String typeVeh, double latitude, double longitude) {
         this.list = list;
         this.context = context;
         this.typeVeh = typeVeh;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     @NonNull
@@ -76,6 +81,17 @@ public class MechOverviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         ((ViewHolder) holder).id.setText(item.getId());
         ((ViewHolder) holder).url.setText(item.getPhoto());
 
+        Location mech = new Location("mechanic");
+        mech.setLatitude(item.getLatitude());
+        mech.setLongitude(item.getLongitude());
+
+        Location user = new Location("User");
+        user.setLatitude(latitude);
+        user.setLongitude(longitude);
+
+        double dist = user.distanceTo(mech);
+
+        ((ViewHolder) holder).distance.setText(dist + "KMS");
     }
 
     @Override
@@ -88,6 +104,7 @@ public class MechOverviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         TextView name, address, timings, type, id, url;
         ImageView image;
         LinearLayout details;
+        TextView distance;
 
         public ViewHolder(final View itemView){
             super(itemView);
@@ -99,6 +116,7 @@ public class MechOverviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             type = itemView.findViewById(R.id.type);
             id = itemView.findViewById(R.id.txtId);
             url = itemView.findViewById(R.id.url);
+            distance = itemView.findViewById(R.id.distance);
 
             image.setOnClickListener(new View.OnClickListener() {
                 @Override

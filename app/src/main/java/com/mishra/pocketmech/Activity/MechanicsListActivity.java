@@ -7,22 +7,26 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.mishra.pocketmech.Adapters.FilterAdapter;
 import com.mishra.pocketmech.Adapters.MechNearby.OverView.ItemMechanic;
 import com.mishra.pocketmech.Adapters.MechNearby.OverView.MechOverviewAdapter;
 import com.mishra.pocketmech.R;
@@ -34,11 +38,13 @@ import java.util.Locale;
 
 import es.dmoral.toasty.Toasty;
 
-public class MechanicsListActivity extends AppCompatActivity {
+public class MechanicsListActivity extends AppCompatActivity implements FilterAdapter.BottomSheetListener {
 
     private FusedLocationProviderClient fusedLocationClient;
     String area_user;
     Double latitude, longitude;
+
+    String type;
 
     TextView areaTxt;
 
@@ -46,8 +52,9 @@ public class MechanicsListActivity extends AppCompatActivity {
     MechOverviewAdapter adapter;
     LinearLayoutManager manager;
     RecyclerView recyclerView;
+    FloatingActionButton filter;
 
-    String type;
+    TextView typeDisp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,9 +64,17 @@ public class MechanicsListActivity extends AppCompatActivity {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         getLocation();
 
+        type = "Bike";
+
+        if (getIntent().hasExtra("type")){
+            type = getIntent().getStringExtra("type");
+        }
+
+        typeDisp = findViewById(R.id.type);
+        typeDisp.setText(type);
+
         areaTxt = findViewById(R.id.txtArea);
         recyclerView = findViewById(R.id.recMech);
-        type = getIntent().getStringExtra("type");
 
         mech = new ArrayList();
         String databasePath = "Mechanics/" + type;
@@ -71,7 +86,9 @@ public class MechanicsListActivity extends AppCompatActivity {
                     ItemMechanic mechanic = dataSnapshot.getValue(ItemMechanic.class);
                     mech.add(mechanic);
                 }
-                adapter = new MechOverviewAdapter(mech, getApplicationContext(), type);
+                String lat = String.format("%.4d", latitude);
+                String lon = String.format("%.4d", longitude);
+                adapter = new MechOverviewAdapter(mech, getApplicationContext(), type, Double.valueOf(lat), Double.valueOf(lon));
                 manager = new LinearLayoutManager(getApplicationContext());
                 recyclerView.setLayoutManager(manager);
                 recyclerView.setAdapter(adapter);
@@ -83,6 +100,18 @@ public class MechanicsListActivity extends AppCompatActivity {
 
             }
         });
+
+        //filter
+        filter = findViewById(R.id.filterIcon);
+        filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FilterAdapter filterNav = new FilterAdapter(type);
+                filterNav.show(getSupportFragmentManager(), "example bottom tag");
+
+            }
+        });
+
     }
 
     public void getLocation() {
@@ -106,6 +135,8 @@ public class MechanicsListActivity extends AppCompatActivity {
                             latitude = location.getLatitude();
                             longitude = location.getLongitude();
 
+
+                     //       Toast.makeText(getApplicationContext(), "lat = " + latitude + "long = " + longitude, Toast.LENGTH_LONG).show();
                             Geocoder geocoder;
                             geocoder = new Geocoder(MechanicsListActivity.this, Locale.getDefault());
                             List<Address> addresses = null;
@@ -130,5 +161,12 @@ public class MechanicsListActivity extends AppCompatActivity {
                 });
     }
 
-
+    @Override
+    public void onItemClicked(String text, int limit) {
+    if (text.equals("Car")){
+        Intent intent = new Intent(getApplicationContext(), MechanicsListActivity.class);
+        intent.putExtra("type", "Car");
+        startActivity(intent);
+    }
+    }
 }
