@@ -35,16 +35,13 @@ import es.dmoral.toasty.Toasty;
 
 public class MechanicsDetailsActivity extends AppCompatActivity {
 
-    String id;
-    DatabaseReference details, reviews;
-
     List<mechRating> list;
 
     //views
     ImageView photo, back, phoneIcon,mapsIcon;
     TextView address, timeMon, timeSat, name, txtPhn;
     RecyclerView recReviews;
-    LinearLayout addReview;
+    LinearLayout showReview, bookNow, bookLater;
     String databasePath_1, databasePath_2;
 
     @Override
@@ -105,9 +102,11 @@ public class MechanicsDetailsActivity extends AppCompatActivity {
         timeMon = findViewById(R.id.timeMon);
         timeSat = findViewById(R.id.timeSat);
         recReviews = findViewById(R.id.recReview);
-        addReview = findViewById(R.id.reviewLay);
+        showReview = findViewById(R.id.reviewLay);
         name = findViewById(R.id.name);
         txtPhn = findViewById(R.id.phnNumber);
+        bookLater = findViewById(R.id.bookLaterLayout);
+        bookNow = findViewById(R.id.bookNowLayout);
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,6 +114,17 @@ public class MechanicsDetailsActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), MechanicsListActivity.class);
                 intent.putExtra("type", getIntent().getStringExtra("type"));
                 startActivity(intent);
+            }
+        });
+
+        showReview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (recReviews.getVisibility() == View.INVISIBLE)
+                    recReviews.setVisibility(View.VISIBLE);
+                else
+                    recReviews.setVisibility(View.INVISIBLE);
             }
         });
 

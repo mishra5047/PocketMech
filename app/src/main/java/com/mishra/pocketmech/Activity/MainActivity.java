@@ -12,6 +12,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -48,6 +49,7 @@ import com.mishra.pocketmech.Adapters.Banner.BannerAdapter;
 import com.mishra.pocketmech.Adapters.Banner.itemBanner;
 import com.mishra.pocketmech.Adapters.Category.CategoryAdapter;
 import com.mishra.pocketmech.Adapters.Category.ItemCategory;
+import com.mishra.pocketmech.Fragments.HomeFragment;
 import com.mishra.pocketmech.R;
 
 import java.io.IOException;
@@ -62,55 +64,50 @@ public class MainActivity extends Activity {
 
     Double latitude, longitude;
     String address_user, city_user;
-    TextView name;
+    BottomNavigationView navigationView;
     private static final int MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 1;
     private FusedLocationProviderClient fusedLocationClient;
-    RecyclerView recCat;
-    RecyclerView recBanner;
-    RelativeLayout emergency;
-    ArrayList<itemBanner> list;
-    BottomNavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        list = new ArrayList();
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         getArea();
 
-        name = findViewById(R.id.name);
-        SharedPreferences preferences = getSharedPreferences("UserDetails", MODE_PRIVATE);
-        String n = preferences.getString("name", "");
-        name.setText("Welcome, " + n);
-
-        recCat = findViewById(R.id.recCategory);
-        setCategory();
-        recBanner = findViewById(R.id.banner);
-        setBanner();
-        emergency = findViewById(R.id.emergencyLay);
-        emergency.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                emergency_function();
-            }
-        });
+        loadFragment(new HomeFragment());
 
         navigationView = findViewById(R.id.bottomBar);
         navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                Fragment fragment = null;
+
                 int id = navigationView.getSelectedItemId();
                 if (id == R.id.home){
+                    fragment = new HomeFragment();
 
                 }else if(id == R.id.mech){
-                    Intent intent = new Intent(getApplicationContext(), OptionActivity.class);
+
                 }
             return true;
             }
         });
+    }
+
+    private boolean loadFragment(Fragment fragment) {
+        //switching fragment
+        if (fragment != null) {
+            getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, fragment)
+                    .commit();
+            return true;
+        }
+        return false;
     }
 
     private void emergency_function() {
@@ -119,7 +116,7 @@ public class MainActivity extends Activity {
         final String num_2 = preferences.getString("emergency_num_2", "");
 
         String location =  "http://maps.google.com/maps?q=loc:" + latitude + "," + longitude;
-        final String message = "This message is sent by PocketMech as " + name + " Has Used the SOS Feature. " + "Location = " + location ;
+        final String message = "This message is sent by PocketMech as Has Used the SOS Feature. " + "Location = " + location ;
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setCancelable(false)
@@ -151,67 +148,6 @@ public class MainActivity extends Activity {
 
     }
 
-    private void setBanner() {
-
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Banner/");
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    if (dataSnapshot.exists()) {
-                        itemBanner item = dataSnapshot.getValue(itemBanner.class);
-                        list.add(item);
-                    }
-                    BannerAdapter adapter = new BannerAdapter(getApplicationContext(), list);
-                    recBanner.setAdapter(adapter);
-                    recBanner.setLayoutManager(new LinearLayoutManager(getApplicationContext(), RecyclerView.HORIZONTAL, false));
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
-    private void setCategory() {
-        RecyclerView.LayoutManager layoutManager;
-        LinearLayoutManager linearLayoutManager;
-
-        final List<ItemCategory> list = new ArrayList();
-        layoutManager = new LinearLayoutManager(this);
-        recCat.setLayoutManager(layoutManager);
-
-        ItemCategory cat = new ItemCategory();
-        cat.setGradient(R.drawable.rounded_rectangle_blue_no_border);
-        cat.setImage(R.drawable.car_insurance);
-        cat.setName("Insurance");
-        list.add(cat);
-
-        cat = new ItemCategory();
-        cat.setGradient(R.drawable.rounded_rectangle_blue_no_border);
-        cat.setImage(R.drawable.faq_icon);
-        cat.setName("FAQ's");
-        list.add(cat);
-
-        cat = new ItemCategory();
-        cat.setGradient(R.drawable.rounded_rectangle_blue_no_border);
-        cat.setImage(R.drawable.profile);
-        cat.setName("My Profile");
-        list.add(cat);
-
-        cat = new ItemCategory();
-        cat.setGradient(R.drawable.rounded_rectangle_blue_no_border);
-        cat.setImage(R.drawable.mechanic);
-        cat.setName("Mechanics Nearby");
-        list.add(cat);
-
-        CategoryAdapter adapter = new CategoryAdapter(list, this);
-        linearLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
-        recCat.setLayoutManager(linearLayoutManager);
-        recCat.setAdapter(adapter);
-    }
 
     void getArea() {
 
@@ -306,6 +242,8 @@ public class MainActivity extends Activity {
                                 SharedPreferences.Editor mEditor = pref.edit();
                                 mEditor.putString("city", city_user);
                                 mEditor.putString("area", address_user);
+                                mEditor.putString("latitude", latitude.toString());
+                                mEditor.putString("longitude", longitude.toString());
                                 mEditor.commit();
                             } else {
 

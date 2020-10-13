@@ -8,88 +8,14 @@
     android:orientation="vertical"
     tools:context=".Activity.MainActivity">
 
-        <TextView
-            android:layout_marginLeft="15dp"
-            android:id="@+id/name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Welcome"
-            android:fontFamily="@font/monsterrat_regular"
-            android:textSize="18sp"
-            android:textColor="@color/colorPrimaryDark"/>
-
-
-    <ImageView
-        android:background="@drawable/logo_pocket"
-        android:layout_marginTop="20dp"
-        android:layout_below="@id/name"
-        android:id="@+id/logo"
+    <FrameLayout
+        android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="180dp"/>
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottomBar"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/banner"
-        android:layout_marginVertical="10dp"
-        android:layout_marginHorizontal="20dp"
-        android:layout_below="@id/logo"
-        android:background="@color/green_bg"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <TextView
-        android:layout_below="@id/banner"
-        android:id="@+id/txt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Services"
-        android:fontFamily="@font/monsterrat_regular"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginVertical="10dp"
-        android:layout_marginHorizontal="20dp"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_below="@id/txt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/green_bg"
-        android:id="@+id/recCategory"
-        android:layout_marginHorizontal="20dp"/>
-
-   <RelativeLayout
-       android:id="@+id/emergencyLay"
-       android:elevation="5dp"
-       android:padding="7dp"
-       android:layout_width="wrap_content"
-       android:layout_above="@id/bottomBar"
-       android:background="@drawable/rounded_rectangle_red_no_border"
-       android:layout_height="wrap_content"
-       android:layout_marginBottom="10dp"
-       android:layout_centerHorizontal="true">
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_centerInParent="true">
-
-        <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:background="@drawable/ic_info" android:layout_toLeftOf="@id/emer"
-            />
-
-        <TextView
-            android:layout_marginHorizontal="5dp"
-            android:id="@+id/emer"
-            android:textColor="@color/white"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Emergency"
-            android:textSize="16sp"/>
-    </LinearLayout>
-   </RelativeLayout>
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomBar"
         android:layout_alignParentBottom="true"

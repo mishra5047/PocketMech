@@ -74,6 +74,7 @@ public class MechOverviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
             }
         });
+
         ((ViewHolder) holder).name.setText(item.getName());
         ((ViewHolder) holder).address.setText(item.getAddress());
         ((ViewHolder) holder).timings.setText(item.getTimings());
@@ -91,7 +92,12 @@ public class MechOverviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         double dist = user.distanceTo(mech);
 
-        ((ViewHolder) holder).distance.setText(dist + "KMS");
+        if (dist>= 1000){
+            ((ViewHolder) holder).distance.setText(dist / 1000 + "mtr");
+        }
+        else {
+            ((ViewHolder) holder).distance.setText(dist + "mtr");
+        }
     }
 
     @Override
@@ -99,7 +105,7 @@ public class MechOverviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return list.size();
     }
 
-    private class ViewHolder extends  RecyclerView.ViewHolder{
+    private class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView name, address, timings, type, id, url;
         ImageView image;

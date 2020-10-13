@@ -21,7 +21,6 @@
         <activity android:name=".Adapters.Listing.InsuranceListing" />
         <activity android:name=".Adapters.Listing.MechanicsListing" />
         <activity android:name=".Activity.FAQActivity" />
-        <activity android:name=".Activity.OptionActivity" />
         <activity android:name=".Activity.MainActivity" />
         <activity android:name=".Activity.DetailsUploadActivity" />
         <activity android:name=".Activity.LoginScreen" />

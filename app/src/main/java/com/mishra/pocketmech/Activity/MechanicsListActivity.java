@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -40,10 +42,6 @@ import es.dmoral.toasty.Toasty;
 
 public class MechanicsListActivity extends AppCompatActivity implements FilterAdapter.BottomSheetListener {
 
-    private FusedLocationProviderClient fusedLocationClient;
-    String area_user;
-    Double latitude, longitude;
-
     String type;
 
     TextView areaTxt;
@@ -56,13 +54,13 @@ public class MechanicsListActivity extends AppCompatActivity implements FilterAd
 
     TextView typeDisp;
 
+    String lat, lon;
+    double latitude, longitude;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mechanics_list);
-
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        getLocation();
 
         type = "Bike";
 
@@ -76,6 +74,23 @@ public class MechanicsListActivity extends AppCompatActivity implements FilterAd
         areaTxt = findViewById(R.id.txtArea);
         recyclerView = findViewById(R.id.recMech);
 
+        //get from shared preference
+        SharedPreferences pref = getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
+
+
+        Double l_1, l_2;
+
+        l_1 = Double.valueOf(pref.getString("latitude", ""));
+        l_2 = Double.valueOf(pref.getString("longitude", ""));
+
+         lat = String.format("%.4f", l_1);
+         lon = String.format("%.4f", l_2);
+
+        if (!(lat.isEmpty() && lon.isEmpty())) {
+           latitude  = Double.parseDouble(lat);
+           longitude = Double.parseDouble(lon);
+        }
+
         mech = new ArrayList();
         String databasePath = "Mechanics/" + type;
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference(databasePath);
@@ -86,9 +101,9 @@ public class MechanicsListActivity extends AppCompatActivity implements FilterAd
                     ItemMechanic mechanic = dataSnapshot.getValue(ItemMechanic.class);
                     mech.add(mechanic);
                 }
-                String lat = String.format("%.4d", latitude);
-                String lon = String.format("%.4d", longitude);
-                adapter = new MechOverviewAdapter(mech, getApplicationContext(), type, Double.valueOf(lat), Double.valueOf(lon));
+                adapter = new MechOverviewAdapter(mech, getApplicationContext(),
+                        type, latitude, longitude);
+
                 manager = new LinearLayoutManager(getApplicationContext());
                 recyclerView.setLayoutManager(manager);
                 recyclerView.setAdapter(adapter);
@@ -114,59 +129,16 @@ public class MechanicsListActivity extends AppCompatActivity implements FilterAd
 
     }
 
-    public void getLocation() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        fusedLocationClient.getLastLocation()
-                .addOnSuccessListener(MechanicsListActivity.this, new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        // Got last known location. In some rare situations this can be null.
-                        if (location != null) {
-                            // Logic to handle location object
-                            latitude = location.getLatitude();
-                            longitude = location.getLongitude();
-
-
-                     //       Toast.makeText(getApplicationContext(), "lat = " + latitude + "long = " + longitude, Toast.LENGTH_LONG).show();
-                            Geocoder geocoder;
-                            geocoder = new Geocoder(MechanicsListActivity.this, Locale.getDefault());
-                            List<Address> addresses = null;
-                            try {
-                                addresses = geocoder.getFromLocation(latitude, longitude, 1);
-
-
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-
-                            if (addresses != null) {
-                                area_user = addresses.get(0).getSubLocality();
-                                areaTxt.setText("Mechanics Nearby " + area_user);
-                            } else {
-
-                                Toast.makeText(getApplicationContext(), "Not Detected", Toast.LENGTH_LONG).show();
-                            }
-
-                        }
-                    }
-                });
-    }
-
     @Override
     public void onItemClicked(String text, int limit) {
-    if (text.equals("Car")){
         Intent intent = new Intent(getApplicationContext(), MechanicsListActivity.class);
+
+        if (text.equals("Car")){
         intent.putExtra("type", "Car");
+        }else if (text.equals("Bike")){
+            intent.putExtra("type", "Bike");
+        }
+
         startActivity(intent);
-    }
     }
 }
