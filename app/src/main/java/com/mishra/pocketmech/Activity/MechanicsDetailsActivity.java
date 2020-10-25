@@ -128,6 +128,19 @@ public class MechanicsDetailsActivity extends AppCompatActivity {
             }
         });
 
+        bookLater.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toasty.info(getApplicationContext(), "Coming Soon", Toasty.LENGTH_SHORT).show();
+            }
+        });
+
+        bookNow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toasty.info(getApplicationContext(), "Coming Soon", Toasty.LENGTH_SHORT).show();
+            }
+        });
     }
 
     void loadDetails(final ItemMechanic mechanic){
@@ -171,5 +184,7 @@ public class MechanicsDetailsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
     }
 }

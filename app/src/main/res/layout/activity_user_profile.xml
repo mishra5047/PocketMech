@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/green_bg"
+    tools:context=".Activity.UserProfile">
+
+    <LinearLayout
+        android:id="@+id/top"
+        android:layout_width="match_parent"
+        android:layout_height="270dp"
+        android:background="@drawable/rounded_rectangle_white_top_corner"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/ic_profile"/>
+
+        <TextView
+            android:id="@+id/user_name"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_large"
+            android:textColor="@color/white"
+            android:layout_gravity="center_horizontal"
+            android:text="Name Here"/>
+
+        <TextView
+            android:id="@+id/user_no"
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/white"
+            android:layout_gravity="center_horizontal"
+            android:text="Contact Number"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_below="@id/top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_rectangle_white_no_border"
+        android:backgroundTint="@color/white"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="-40dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_large"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginVertical="5dp"
+            android:text="Emergency Contacts"/>
+
+        <TextView
+            android:id="@+id/name_1"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:text="Contact 1"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/black"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="7dp"
+            android:layout_marginHorizontal="15dp">
+
+            <TextView
+                android:id="@+id/num_1"
+                android:textSize="@dimen/text_medium"
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:layout_height="wrap_content"
+                android:text="Number 1"
+                android:textColor="@color/black"/>
+
+            <ImageView
+                android:id="@+id/edit_1"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_weight="0.3"
+                android:background="@drawable/ic_edit"
+                android:backgroundTint="@color/black"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/name_2"
+            android:textSize="@dimen/text_medium"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:text="Contact 2"
+            android:textColor="@color/black"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="7dp"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginBottom="30dp">
+
+            <TextView
+                android:id="@+id/num_2"
+                android:textSize="@dimen/text_medium"
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:layout_height="wrap_content"
+                android:text="Number 1"
+                android:textColor="@color/black"/>
+
+            <ImageView
+                android:id="@+id/edit_2"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_weight="0.3"
+                android:background="@drawable/ic_edit"
+                android:backgroundTint="@color/black"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/why_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@drawable/rounded_rectangle_blue_no_border"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:padding="7dp"
+        android:layout_margin="20dp"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/ic_info"/>
+
+        <TextView
+            android:textSize="@dimen/text_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="Use of Emergency Numbers?"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

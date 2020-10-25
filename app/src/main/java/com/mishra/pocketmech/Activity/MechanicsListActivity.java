@@ -76,7 +76,8 @@ public class MechanicsListActivity extends AppCompatActivity implements FilterAd
 
         //get from shared preference
         SharedPreferences pref = getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
-
+        String area = pref.getString("area", "");
+        areaTxt.setText("Mechanic Nearby " + area);
 
         Double l_1, l_2;
 

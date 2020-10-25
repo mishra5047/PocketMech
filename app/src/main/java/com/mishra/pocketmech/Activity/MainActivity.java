@@ -1,17 +1,8 @@
 package com.mishra.pocketmech.Activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -24,37 +15,22 @@ import android.location.Location;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.daimajia.slider.library.Animations.DescriptionAnimation;
-import com.daimajia.slider.library.SliderLayout;
-import com.daimajia.slider.library.SliderTypes.BaseSliderView;
-import com.daimajia.slider.library.SliderTypes.TextSliderView;
-import com.daimajia.slider.library.Tricks.ViewPagerEx;
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.mishra.pocketmech.Adapters.Banner.BannerAdapter;
-import com.mishra.pocketmech.Adapters.Banner.itemBanner;
-import com.mishra.pocketmech.Adapters.Category.CategoryAdapter;
-import com.mishra.pocketmech.Adapters.Category.ItemCategory;
+import com.mishra.pocketmech.Adapters.Listing.FAQListing;
 import com.mishra.pocketmech.Fragments.HomeFragment;
+import com.mishra.pocketmech.Fragments.ProfileFragment;
 import com.mishra.pocketmech.R;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -90,9 +66,10 @@ public class MainActivity extends Activity {
                 if (id == R.id.home){
                     fragment = new HomeFragment();
 
-                }else if(id == R.id.mech){
-
+                }else if(id == R.id.profile){
+                    fragment  = new ProfileFragment();
                 }
+
             return true;
             }
         });

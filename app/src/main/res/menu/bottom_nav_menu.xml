@@ -8,18 +8,6 @@
         android:icon="@drawable/ic_home"/>
 
     <item
-        android:id="@+id/mech"
-        android:enabled="true"
-        android:title="Mechanic"
-        android:icon="@drawable/ic_wrench"/>
-
-    <item
-        android:id="@+id/faq"
-        android:enabled="true"
-        android:title="FAQ's"
-        android:icon="@drawable/ic_home"/>
-
-    <item
         android:id="@+id/profile"
         android:enabled="true"
         android:title="Profile"
