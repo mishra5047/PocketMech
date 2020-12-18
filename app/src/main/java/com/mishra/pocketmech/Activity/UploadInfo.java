@@ -4,6 +4,9 @@ public class UploadInfo {
 
     String name, phone;
 
+    public UploadInfo() {
+    }
+
     public UploadInfo(String name, String phone) {
         this.name = name;
         this.phone = phone;

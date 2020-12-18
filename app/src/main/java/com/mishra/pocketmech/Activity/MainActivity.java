@@ -14,6 +14,8 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.telephony.SmsManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -25,6 +27,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.mancj.materialsearchbar.MaterialSearchBar;
 import com.mishra.pocketmech.Adapters.Listing.FAQListing;
 import com.mishra.pocketmech.Fragments.HomeFragment;
 import com.mishra.pocketmech.Fragments.ProfileFragment;
@@ -43,48 +46,32 @@ public class MainActivity extends Activity {
     BottomNavigationView navigationView;
     private static final int MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 1;
     private FusedLocationProviderClient fusedLocationClient;
+    MaterialSearchBar searchBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         getArea();
-
-        loadFragment(new HomeFragment());
-
-        navigationView = findViewById(R.id.bottomBar);
-        navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        searchBar = findViewById(R.id.searchBar);
+        searchBar.addTextChangeListener(new TextWatcher() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                Fragment fragment = null;
+            }
 
-                int id = navigationView.getSelectedItemId();
-                if (id == R.id.home){
-                    fragment = new HomeFragment();
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                }else if(id == R.id.profile){
-                    fragment  = new ProfileFragment();
-                }
+            }
 
-            return true;
+            @Override
+            public void afterTextChanged(Editable editable) {
+
             }
         });
-    }
-
-    private boolean loadFragment(Fragment fragment) {
-        //switching fragment
-        if (fragment != null) {
-            getFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, fragment)
-                    .commit();
-            return true;
-        }
-        return false;
     }
 
     private void emergency_function() {
@@ -103,7 +90,7 @@ public class MainActivity extends Activity {
 
                         
                         SmsManager manager = SmsManager.getDefault();
-                        manager.sendTextMessage("9599656583", null, message, null, null);
+                        manager.sendTextMessage("+91-9599656583", null, message, null, null);
                         manager.sendTextMessage(num_2, null, message, null, null);
 
                         Toasty.warning(MainActivity.this, "SOS Message Sent", Toasty.LENGTH_SHORT).show();
