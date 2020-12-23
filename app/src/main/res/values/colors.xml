@@ -96,4 +96,7 @@
 
     <color name="badge_error">#f45000</color>
     <color name="badge_warning">#ff5e13</color>
+    <color name="grad_blue_1">#3F51B5</color>
+    <color name="grad_blue_2">#1A237E</color>
+    <color name="blue_text_color">#5e85b9</color>
 </resources>

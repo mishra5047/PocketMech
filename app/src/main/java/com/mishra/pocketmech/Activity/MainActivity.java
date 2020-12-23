@@ -17,29 +17,42 @@ import android.telephony.SmsManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mancj.materialsearchbar.MaterialSearchBar;
+import com.mishra.pocketmech.Adapters.Banner.itemBanner;
+import com.mishra.pocketmech.Adapters.Category.CategoryAdapter;
+import com.mishra.pocketmech.Adapters.Category.ItemCategory;
 import com.mishra.pocketmech.Adapters.Listing.FAQListing;
 import com.mishra.pocketmech.Fragments.HomeFragment;
 import com.mishra.pocketmech.Fragments.ProfileFragment;
 import com.mishra.pocketmech.R;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import es.dmoral.toasty.Toasty;
 
 public class MainActivity extends Activity {
+
+    //views
+    RecyclerView recCat;
+    ArrayList<itemBanner> list;
+    TextView name;
 
     Double latitude, longitude;
     String address_user, city_user;
@@ -52,6 +65,8 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        views();
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         getArea();
@@ -72,6 +87,53 @@ public class MainActivity extends Activity {
 
             }
         });
+    }
+
+    private void views() {
+        recCat = findViewById(R.id.recCategory);
+        list = new ArrayList();
+        name = findViewById(R.id.txtWelcome);
+
+        SharedPreferences preferences = getSharedPreferences("UserDetails", 0);
+        String n = preferences.getString("name", "");
+        name.setText("Welcome, " + n);
+
+        RecyclerView.LayoutManager layoutManager;
+        LinearLayoutManager linearLayoutManager;
+
+        final List<ItemCategory> list = new ArrayList();
+        layoutManager = new LinearLayoutManager(getApplicationContext());
+        recCat.setLayoutManager(layoutManager);
+
+        ItemCategory cat = new ItemCategory();
+        cat.setGradient(R.drawable.rounded_rectangle_blue_no_border);
+        cat.setImage(R.drawable.car_insurance);
+        cat.setName("Insurance");
+        list.add(cat);
+
+        cat = new ItemCategory();
+        cat.setGradient(R.drawable.rounded_rectangle_blue_no_border);
+        cat.setImage(R.drawable.faq_icon);
+        cat.setName("FAQ's");
+        list.add(cat);
+
+        cat = new ItemCategory();
+        cat.setGradient(R.drawable.rounded_rectangle_blue_no_border);
+        cat.setImage(R.drawable.profile);
+        cat.setName("My Profile");
+        list.add(cat);
+
+        cat = new ItemCategory();
+        cat.setGradient(R.drawable.rounded_rectangle_blue_no_border);
+        cat.setImage(R.drawable.mechanic);
+        cat.setName("Mechanics Nearby");
+        list.add(cat);
+
+        CategoryAdapter adapter = new CategoryAdapter(list, getApplicationContext());
+        linearLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
+        recCat.setLayoutManager(linearLayoutManager);
+        recCat.setAdapter(adapter);
+
     }
 
     private void emergency_function() {

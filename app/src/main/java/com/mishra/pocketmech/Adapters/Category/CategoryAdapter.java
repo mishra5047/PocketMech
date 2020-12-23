@@ -45,7 +45,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         ItemCategory itemCategory = list.get(position);
         ((ViewHolder) holder).imageItem.setImageResource(itemCategory.getImage());
         ((ViewHolder) holder).nameItem.setText(itemCategory.getName());
-        ((ViewHolder) holder).relativeLayout.setBackgroundResource(itemCategory.getGradient());
+
     }
 
     @Override
