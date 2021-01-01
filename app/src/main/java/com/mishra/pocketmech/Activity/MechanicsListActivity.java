@@ -68,9 +68,6 @@ public class MechanicsListActivity extends AppCompatActivity implements FilterAd
             type = getIntent().getStringExtra("type");
         }
 
-        typeDisp = findViewById(R.id.type);
-        typeDisp.setText(type);
-
         areaTxt = findViewById(R.id.txtArea);
         recyclerView = findViewById(R.id.recMech);
 
